@@ -1,3 +1,21 @@
-class Viaje {
-    
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+
+public class Viaje {
+    private String nombreDestino;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private List<Actividad> itinerario = new ArrayList<>();
+    private double presupuesto;
+    private int cantidadPersonas;
+
+    public Viaje(String nombreDestino, LocalDate fechaInicio, LocalDate fechaFin,
+                 double presupuesto, int cantidadPersonas) {
+        this.nombreDestino = nombreDestino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.presupuesto = presupuesto;
+        this.cantidadPersonas = cantidadPersonas;
+    }
 }
