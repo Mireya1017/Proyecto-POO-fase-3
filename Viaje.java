@@ -18,4 +18,8 @@ public class Viaje {
         this.presupuesto = presupuesto;
         this.cantidadPersonas = cantidadPersonas;
     }
+    public void agregarActividad(Actividad actividad) {
+        if (actividad != null) itinerario.add(actividad);
+    }
+
 }
