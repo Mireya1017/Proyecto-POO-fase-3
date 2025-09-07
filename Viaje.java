@@ -21,5 +21,10 @@ public class Viaje {
     public void agregarActividad(Actividad actividad) {
         if (actividad != null) itinerario.add(actividad);
     }
+    public int calcularDuracion() {
+        if (fechaInicio == null || fechaFin == null) return 0;
+        long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+        return (int) Math.max(0, dias);
+    }
 
 }
