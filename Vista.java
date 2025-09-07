@@ -1,3 +1,0 @@
-class Vista extends JFrame {
-    
-}
