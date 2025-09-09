@@ -1,8 +1,6 @@
 import java.util.*;
 
-/*
- * Clase 3: Actividad (Modelo) — Soporte sin commits asignados
- */
+
 public class Actividad {
     private String nombre;
     private String tipo;
@@ -28,4 +26,24 @@ public class Actividad {
             return 0;
         }
     }
-}
+    public double getCosto() { 
+        return costoEstimado; 
+    }
+    public String getNombre() { 
+        return nombre; 
+    }
+    public void setNombre(String nombre) { 
+        this.nombre = nombre; 
+    }
+
+    public String getTipo() { 
+        return tipo; 
+    }
+    public void setTipo(String tipo) { 
+        this.tipo = tipo; 
+    }
+
+    
+        
+    }
+
