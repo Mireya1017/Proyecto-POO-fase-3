@@ -8,11 +8,11 @@ public class Vista {
     private final ControladorSistema controlador = new ControladorSistema();
 
     public void mostrarMenuPrincipal() {
-        System.out.println("\n=== MENÚ PRINCIPAL ===");
+        System.out.println(" MENÚ PRINCIPAL");
         System.out.println("1. Registrar usuario");
         System.out.println("2. Iniciar sesión");
-        System.out.println("3. Crear nuevo viaje (requiere sesión)");
-        System.out.println("4. Ver/Editar/Eliminar viajes (requiere sesión)");
+        System.out.println("3. Crear nuevo viaje (necesita ingresar sesión)");
+        System.out.println("4. Ver/Editar/Eliminar viajes (necesita ingresar sesión)");
         System.out.println("0. Salir");
         System.out.print("Opción: ");
     }
@@ -25,4 +25,41 @@ public class Vista {
     }
     private int parseInt(String s) {
         try { return Integer.parseInt(s); } catch (Exception e) { return 0; }
+    }
+    public Usuario pedirDatosUsuario() {
+        System.out.println("\n=== Registro de Usuario ===");
+        System.out.print("Nombre: "); String nombre = sc.nextLine().trim();
+        System.out.print("Correo: "); String correo = sc.nextLine().trim();
+        System.out.print("Contraseña: "); String contraseña = sc.nextLine().trim();
+        System.out.print("Tipo de usuario: "); String tipo = sc.nextLine().trim();
+        return new Usuario(nombre, correo, contraseña, tipo);
+    }
+
+    public boolean flujoLogin() {
+        System.out.println("\n=== Iniciar Sesión ===");
+        System.out.print("Correo: "); String correo = sc.nextLine().trim();
+        System.out.print("Contraseña: "); String contraseña = sc.nextLine().trim();
+        boolean ok = controlador.iniciarSesion(correo, contraseña);
+        System.out.println(ok ? "Sesión iniciada correctamente." : "Credenciales inválidas.");
+        return ok;
+    }
+
+    public Viaje pedirDatosViaje() {
+        System.out.println("\n=== Crear Nuevo Viaje ===");
+        System.out.print("Destino: "); String destino = sc.nextLine().trim();
+        System.out.print("Fecha inicio (YYYY-MM-DD): "); LocalDate inicio = parseFecha(sc.nextLine().trim());
+        System.out.print("Fecha fin (YYYY-MM-DD): "); LocalDate fin = parseFecha(sc.nextLine().trim());
+        System.out.print("Presupuesto estimado: "); double presupuesto = parseDouble(sc.nextLine().trim());
+        System.out.print("Cantidad de personas: "); int personas = parseInt(sc.nextLine().trim());
+        return new Viaje(destino, inicio, fin, presupuesto, personas);
+    }
+
+    public Actividad pedirDatosActividad() {
+        System.out.println("\n=== Agregar Actividad ===");
+        System.out.print("Nombre: "); String nombre = sc.nextLine().trim();
+        System.out.print("Tipo: "); String tipo = sc.nextLine().trim();
+        System.out.print("Hora inicio (HH:MM): "); String hi = sc.nextLine().trim();
+        System.out.print("Hora fin (HH:MM): "); String hf = sc.nextLine().trim();
+        System.out.print("Costo estimado: "); double costo = parseDouble(sc.nextLine().trim());
+        return new Actividad(nombre, tipo, hi, hf, costo);
     }
