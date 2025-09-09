@@ -26,5 +26,10 @@ public class Viaje {
         long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
         return (int) Math.max(0, dias);
     }
+    public double calcularPresupuestoTotal() {
+        double suma = 0.0;
+        for (Actividad a : itinerario) suma += a.getCosto();
+        return suma;
 
+}
 }
