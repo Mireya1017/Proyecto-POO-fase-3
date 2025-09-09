@@ -63,3 +63,66 @@ public class Vista {
         System.out.print("Costo estimado: "); double costo = parseDouble(sc.nextLine().trim());
         return new Actividad(nombre, tipo, hi, hf, costo);
     }
+
+    public void mostrarViajes(List<Viaje> viajes) {
+        System.out.println("\n=== Mis Viajes ===");
+        if (viajes == null || viajes.isEmpty()) {
+            System.out.println("No hay viajes registrados.");
+            return;
+        }
+        int i = 1;
+        for (Viaje v : viajes) {
+            System.out.println(i + ". " + v.getNombreDestino() + " | " +
+                "Inicio: " + v.getFechaInicio() + " | Fin: " + v.getFechaFin() +
+                " | Personas: " + v.getCantidadPersonas() +
+                " | PresupuestoActividades: " + v.calcularPresupuestoTotal());
+            i++;
+        }
+    }
+
+    public void mostrarItinerario(Viaje viaje) {
+        System.out.println("\n=== Itinerario de " + viaje.getNombreDestino() + " ===");
+        List<Actividad> acts = viaje.getItinerario();
+        if (acts.isEmpty()) {
+            System.out.println("Sin actividades.");
+        } else {
+            int i = 1;
+            for (Actividad a : acts) {
+                System.out.println(i + ". " + a.getNombre() + " (" + a.getTipo() + ") "
+                        + a.getHoraInicio() + "-" + a.getHoraFin()
+                        + " | Q" + a.getCostoEstimado());
+                i++;
+            }
+        }
+    }
+    public void mostrarViajes(List<Viaje> viajes) {
+        System.out.println("\n=== Mis Viajes ===");
+        if (viajes == null || viajes.isEmpty()) {
+            System.out.println("No hay viajes registrados.");
+            return;
+        }
+        int i = 1;
+        for (Viaje v : viajes) {
+            System.out.println(i + ". " + v.getNombreDestino() + " | " +
+                "Inicio: " + v.getFechaInicio() + " | Fin: " + v.getFechaFin() +
+                " | Personas: " + v.getCantidadPersonas() +
+                " | PresupuestoActividades: " + v.calcularPresupuestoTotal());
+            i++;
+        }
+    }
+
+    public void mostrarItinerario(Viaje viaje) {
+        System.out.println("\n=== Itinerario de " + viaje.getNombreDestino() + " ===");
+        List<Actividad> acts = viaje.getItinerario();
+        if (acts.isEmpty()) {
+            System.out.println("Sin viaje planeado.");
+        } else {
+            int i = 1;
+            for (Actividad a : acts) {
+                System.out.println(i + ". " + a.getNombre() + " (" + a.getTipo() + ") "
+                        + a.getHoraInicio() + "-" + a.getHoraFin()
+                        + " | Q" + a.getCostoEstimado());
+                i++;
+            }
+        }
+    }
