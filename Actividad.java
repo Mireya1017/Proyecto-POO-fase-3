@@ -42,8 +42,27 @@ public class Actividad {
     public void setTipo(String tipo) { 
         this.tipo = tipo; 
     }
+    public String getHoraInicio() { 
+        return horaInicio; 
+    }
+    public void setHoraInicio(String horaInicio) { 
+        this.horaInicio = horaInicio; 
+    }
+
+    public String getHoraFin() { 
+        return horaFin; 
+    }
+    public void setHoraFin(String horaFin) { 
+        this.horaFin = horaFin; 
+    }
+    public double getCostoEstimado() { 
+        return costoEstimado; 
+    }
+    public void setCostoEstimado(double costoEstimado) { 
+        this.costoEstimado = costoEstimado; 
+    }
+}
 
     
         
-    }
-
+    
