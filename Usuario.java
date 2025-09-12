@@ -51,3 +51,4 @@ public class Usuario {
 
     public String getTipoUsuario() { return tipoUsuario; }
     public void setTipoUsuario(String tipo) { this.tipoUsuario = tipo; }
+}
