@@ -22,7 +22,7 @@ public void registrarUsuario(Usuario usuario) {
             System.out.println("El correo ya está registrado.");
         }
     }
-
+// iniciar Sesion con valores)
 public boolean iniciarSesion(String correo, String contraseña) {
     for (Usuario u : usuariosRegistrados) {
         if (u.autenticarse(correo, contraseña)) {
@@ -31,4 +31,13 @@ public boolean iniciarSesion(String correo, String contraseña) {
             }
         }
         return false;
+    }
+//Consructor objeto viajes
+public void crearViaje(Viaje viaje) {
+        if (usuarioActual != null && viaje != null) {
+            usuarioActual.agregarViaje(viaje);
+            System.out.println("Viaje creado y agregado al usuario actual.");
+        } else {
+            System.out.println("Debe iniciar sesión antes de crear un viaje.");
+        }
     }
