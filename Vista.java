@@ -153,9 +153,31 @@ private void flujoRegistro() {
                 System.out.print("¿Agregar otra actividad? (s/n): ");
                 String r2 = sc.nextLine().trim().toLowerCase();
                 if (!r2.equals("s")) {
-                    seguir = false; // sin break
+                    seguir = false; 
                 }
             }
             System.out.println("Actividades agregadas.");
         }
     }
+     public static void main(String[] args) {
+        Vista vista = new Vista();
+        boolean corriendo = true;
+        do {
+            vista.mostrarMenuPrincipal();
+            String opcion = vista.sc.nextLine().trim();
+
+            if (opcion.equals("1")) {
+                vista.flujoRegistro();
+            } else if (opcion.equals("2")) {
+                vista.flujoLogin();
+            } else if (opcion.equals("3")) {
+                vista.flujoCrearViaje();
+            } else if (opcion.equals("4")) {
+                vista.flujoGestionViajes();
+            } else if (opcion.equals("0")) {
+                corriendo = false;
+            } else {
+                System.out.println("Opción inválida.");
+            }
+        } while (corriendo);
+        System.out.println("¡Hasta pronto!");
