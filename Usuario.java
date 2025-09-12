@@ -24,3 +24,17 @@ public class Usuario {
 
     public void agregarViaje(Viaje viaje) {
         if (viaje != null) viajes.add(viaje);
+
+    public List<Viaje> getViajes() { return viajes; }
+
+    public boolean eliminarViaje(String nombreDestino) {
+        Iterator<Viaje> it = viajes.iterator();
+        boolean eliminado = false;
+        while (it.hasNext()) {
+            Viaje v = it.next();
+            if (v.getNombreDestino().equalsIgnoreCase(nombreDestino)) {
+                it.remove();
+                eliminado = true;
+            }
+        }
+        return eliminado;
