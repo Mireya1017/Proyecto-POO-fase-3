@@ -126,3 +126,36 @@ public class Vista {
             }
         }
     }
+private void flujoRegistro() {
+        Usuario u = pedirDatosUsuario();
+        if (u.getNombre().isEmpty() || u.getCorreo().isEmpty() || u.getContraseña().isEmpty()) {
+            System.out.println("Datos incompletos. Intente de nuevo.");
+            return;
+        }
+        controlador.registrarUsuario(u);
+    }
+
+    private void flujoCrearViaje() {
+        Viaje v = pedirDatosViaje();
+        if (v.getNombreDestino() == null || v.getNombreDestino().isEmpty()) {
+            System.out.println("Destino inválido.");
+            return;
+        }
+        controlador.crearViaje(v);
+
+        System.out.print("¿Desea agregar actividades ahora? (s/n): ");
+        String resp = sc.nextLine().trim().toLowerCase();
+        if (resp.equals("s")) {
+            boolean seguir = true;
+            while (seguir) {
+                Actividad a = pedirDatosActividad();
+                v.agregarActividad(a);
+                System.out.print("¿Agregar otra actividad? (s/n): ");
+                String r2 = sc.nextLine().trim().toLowerCase();
+                if (!r2.equals("s")) {
+                    seguir = false; // sin break
+                }
+            }
+            System.out.println("Actividades agregadas.");
+        }
+    }
