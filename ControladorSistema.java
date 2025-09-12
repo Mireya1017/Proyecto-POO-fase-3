@@ -61,3 +61,22 @@ public List<Viaje> verViajes() {
         if (usuarioActual == null) return false;
         return usuarioActual.eliminarViaje(nombreDestino);
     }
+
+// Info sobre viajes y usuario
+
+ public String obtenerResumenViaje(String nombreDestino) {
+        if (usuarioActual == null) return "Inicie sesión.";
+        for (Viaje v : usuarioActual.getViajes()) {
+            if (v.getNombreDestino().equalsIgnoreCase(nombreDestino)) {
+                return "Destino: " + v.getNombreDestino()
+                        + " | Duración (días): " + v.calcularDuracion()
+                        + " | Actividades: " + v.getItinerario().size()
+                        + " | PresupuestoActividades: " + v.calcularPresupuestoTotal();
+            }
+        }
+        return "Viaje no encontrado.";
+    }
+
+    public Usuario getUsuarioActual() { return usuarioActual; }
+    public void setUsuarioActual(Usuario u) { this.usuarioActual = u; }
+}
