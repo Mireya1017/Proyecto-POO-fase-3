@@ -90,6 +90,13 @@ public class Viaje {
         this.cantidadPersonas = cantidadPersonas;
      }
 }
+public void agregarActividad(Actividad actividad) {
+    if (actividades == null) {
+        actividades = new ArrayList<>();
+    }
+    actividades.add(actividad);
+    System.out.println("Actividad agregada correctamente: " + actividad.getNombre());
+}
 
 
 

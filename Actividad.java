@@ -26,6 +26,12 @@ public class Actividad {
             return 0;
         }
     }
+    
+     @Override
+    public String toString() {
+        return nombre + " (" + tipo + ") " + horaInicio + "-" + horaFin + " | Q" + costoEstimado;
+    }
+    
     public double getCosto() { 
         return costoEstimado; 
     }
