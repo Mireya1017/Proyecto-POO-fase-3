@@ -192,6 +192,10 @@ public class Vista {
         System.out.println("3. Presupuesto");
         System.out.println("4. Cantidad de personas");
         System.out.println("5. Itinerario (agregar actividad)");
+        System.out.println("6. Calcular duración total del viaje");
+case 6:
+    controlador.mostrarDuracionViaje(viajeActual);
+    break;
         System.out.print("Opción: ");
         String opcion = sc.nextLine().trim();
 
@@ -246,3 +250,5 @@ public class Vista {
         System.out.println("¡Hasta pronto!");
     }
 }
+
+
