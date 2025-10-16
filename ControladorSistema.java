@@ -79,6 +79,10 @@ public List<Viaje> verViajes() {
 
     public Usuario getUsuarioActual() { return usuarioActual; }
     public void setUsuarioActual(Usuario u) { this.usuarioActual = u; }
+
+    public void pruebaDuracion(Viaje viaje) {
+        System.out.println("Duración calculada correctamente: " + viaje.calcularDuracionTotal() + " horas.");
+    }
 }
 public void mostrarDuracionViaje(Viaje viaje) {
     System.out.println("La duración total del viaje es: " + viaje.calcularDuracionTotal() + " horas.");
