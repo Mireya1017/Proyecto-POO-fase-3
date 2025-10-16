@@ -97,6 +97,16 @@ public void agregarActividad(Actividad actividad) {
     actividades.add(actividad);
     System.out.println("Actividad agregada correctamente: " + actividad.getNombre());
 }
+public void editarActividad(String nombreAntiguo, Actividad nuevaActividad) {
+    for (int i = 0; i < actividades.size(); i++) {
+        if (actividades.get(i).getNombre().equalsIgnoreCase(nombreAntiguo)) {
+            actividades.set(i, nuevaActividad);
+            System.out.println("Actividad actualizada correctamente.");
+            return;
+        }
+    }
+    System.out.println("No se encontró la actividad con ese nombre.");
+}
 
 
 
