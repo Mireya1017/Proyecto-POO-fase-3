@@ -83,6 +83,58 @@ public List<Viaje> verViajes() {
     public void pruebaDuracion(Viaje viaje) {
         System.out.println("Duración calculada correctamente: " + viaje.calcularDuracionTotal() + " horas.");
     }
+    public void gestionarActividades(Viaje viaje) {
+    Scanner sc = new Scanner(System.in);
+    int opcion;
+    do {
+        System.out.println("\n--- GESTIÓN DE ACTIVIDADES ---");
+        System.out.println("1. Agregar actividad");
+        System.out.println("2. Editar actividad");
+        System.out.println("3. Eliminar actividad");
+        System.out.println("4. Ver actividades");
+        System.out.println("0. Salir");
+        System.out.print("Elija una opción: ");
+        opcion = sc.nextInt();
+        sc.nextLine();
+
+        switch (opcion) {
+            case 1:
+                System.out.print("Nombre: ");
+                String nombre = sc.nextLine();
+                System.out.print("Costo: ");
+                double costo = sc.nextDouble();
+                sc.nextLine();
+                System.out.print("Duración (horas): ");
+                double duracion = sc.nextDouble();
+                sc.nextLine();
+                viaje.agregarActividad(new Actividad(nombre, costo, duracion));
+                break;
+            case 2:
+                System.out.print("Nombre de la actividad a editar: ");
+                String viejo = sc.nextLine();
+                System.out.print("Nuevo nombre: ");
+                String nuevoNombre = sc.nextLine();
+                System.out.print("Nuevo costo: ");
+                double nuevoCosto = sc.nextDouble();
+                sc.nextLine();
+                System.out.print("Nueva duración: ");
+                double nuevaDuracion = sc.nextDouble();
+                sc.nextLine();
+                viaje.editarActividad(viejo, new Actividad(nuevoNombre, nuevoCosto, nuevaDuracion));
+                break;
+            case 3:
+                System.out.print("Nombre de la actividad a eliminar: ");
+                String eliminar = sc.nextLine();
+                viaje.eliminarActividad(eliminar);
+                break;
+            case 4:
+                for (Actividad a : viaje.getActividades()) {
+                    System.out.println(a);
+                }
+                break;
+        }
+    } while (opcion != 0);
+}
 }
 public void mostrarDuracionViaje(Viaje viaje) {
     System.out.println("La duración total del viaje es: " + viaje.calcularDuracionTotal() + " horas.");
