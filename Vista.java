@@ -11,6 +11,7 @@ public class Vista {
         System.out.println("2. Iniciar sesión");
         System.out.println("3. Crear nuevo viaje (requiere sesión)");
         System.out.println("4. Ver/Editar/Eliminar viajes (requiere sesión)");
+        System.out.println("6. Calcular presupuesto total del viaje");
         System.out.println("7. Generar resumen del viaje");
         System.out.println("0. Salir");
         System.out.print("Opción: ");
@@ -251,6 +252,7 @@ case 6:
         System.out.println("¡Hasta pronto!");
     }
 }
+
 
 
 
