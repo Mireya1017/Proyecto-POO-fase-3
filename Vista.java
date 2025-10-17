@@ -11,7 +11,9 @@ public class Vista {
         int op;
         do {
             mostrarMenu();
-            op = Integer.parseInt(sc.nextLine());
+            String line = sc.nextLine();
+            if (line.isBlank()) continue;
+            try { op = Integer.parseInt(line); } catch (Exception e) { op = -1; }
             switch (op) {
                 case 1 -> registrarUsuario();
                 case 2 -> iniciarSesion();
@@ -20,8 +22,10 @@ public class Vista {
                 case 5 -> calcularDuracion();
                 case 6 -> calcularPresupuesto();
                 case 7 -> generarResumen();
+                case 0 -> System.out.println("Saliendo...");
+                default -> System.out.println("Opción inválida.");
             }
-        } while (op != 0);
+        } while (true);
     }
 
     private void mostrarMenu() {
@@ -79,38 +83,43 @@ public class Vista {
         int op;
         do {
             System.out.println("\n1. Agregar 2. Editar 3. Eliminar 4. Ver 0. Salir");
-            op = Integer.parseInt(sc.nextLine());
+            try { op = Integer.parseInt(sc.nextLine()); } catch (Exception e) { op = -1; }
             switch (op) {
-                case 1 -> controlador.agregarActividadAViajeV2(d, pedirActividad());
+                case 1 -> System.out.println(controlador.agregarActividadAViajeV2(d, pedirActividad()) ? "Ok" : "Error");
                 case 2 -> {
                     List<Actividad> lista = controlador.verItinerarioDeViajeV2(d);
                     for (int i = 0; i < lista.size(); i++) System.out.println(i + ": " + lista.get(i));
                     System.out.print("Índice: "); int idx = Integer.parseInt(sc.nextLine());
                     if (idx >= 0 && idx < lista.size())
-                        controlador.editarActividadDeViajeV2(d, idx, pedirActividad());
+                        System.out.println(controlador.editarActividadDeViajeV2(d, idx, pedirActividad()) ? "Ok" : "Error");
                 }
                 case 3 -> {
                     List<Actividad> lista = controlador.verItinerarioDeViajeV2(d);
                     for (int i = 0; i < lista.size(); i++) System.out.println(i + ": " + lista.get(i));
                     System.out.print("Índice: "); int idx = Integer.parseInt(sc.nextLine());
-                    controlador.eliminarActividadDeViajeV2(d, idx);
+                    System.out.println(controlador.eliminarActividadDeViajeV2(d, idx) ? "Ok" : "Error");
                 }
                 case 4 -> controlador.verItinerarioDeViajeV2(d).forEach(System.out::println);
+                case 0 -> { return; }
+                default -> System.out.println("Inválido");
             }
-        } while (op != 0);
+        } while (true);
     }
 
     private void calcularDuracion() {
+        if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println("Duración: " + controlador.calcularDuracionDeViajeV2(d) + " días.");
     }
 
     private void calcularPresupuesto() {
+        if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println("Presupuesto: Q " + controlador.calcularPresupuestoDeViajeV2(d));
     }
 
     private void generarResumen() {
+        if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println(controlador.generarResumenDeViajeV2(d));
     }
