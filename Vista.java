@@ -11,6 +11,7 @@ public class Vista {
         System.out.println("2. Iniciar sesión");
         System.out.println("3. Crear nuevo viaje (requiere sesión)");
         System.out.println("4. Ver/Editar/Eliminar viajes (requiere sesión)");
+        System.out.println("7. Generar resumen del viaje");
         System.out.println("0. Salir");
         System.out.print("Opción: ");
     }
@@ -153,9 +154,9 @@ public class Vista {
             } else if (op.equals("4")) {
                 System.out.print("Destino para resumen: ");
                 String nombre = sc.nextLine().trim();
-                System.out.println(controlador.obtenerResumenViaje(nombre));
-            } else if (op.equals("5")) {
-                continuar = false;
+                Viaje v = controlador.buscarViajePorDestino(nombre);
+                if (v != null) {
+                    controlador.generarResumen(v);
             } else {
                 System.out.println("Opción inválida.");
             }
@@ -250,5 +251,6 @@ case 6:
         System.out.println("¡Hasta pronto!");
     }
 }
+
 
 
