@@ -135,6 +135,20 @@ public List<Viaje> verViajes() {
         }
     } while (opcion != 0);
 }
+public void generarResumen(Viaje viaje) {
+    System.out.println("\n--- RESUMEN DEL VIAJE ---");
+    System.out.println("Destino: " + viaje.getDestino());
+    System.out.println("Duración total: " + viaje.calcularDuracionTotal() + " horas");
+    System.out.println("Presupuesto total: Q" + viaje.calcularPresupuestoTotal());
+    System.out.println("Actividades:");
+    if (viaje.getActividades().isEmpty()) {
+        System.out.println("No hay actividades registradas.");
+    } else {
+        for (Actividad a : viaje.getActividades()) {
+            System.out.println("- " + a);
+        }
+    }
+}
 }
 public void mostrarDuracionViaje(Viaje viaje) {
     System.out.println("La duración total del viaje es: " + viaje.calcularDuracionTotal() + " horas.");
