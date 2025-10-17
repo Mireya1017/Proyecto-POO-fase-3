@@ -14,41 +14,14 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public void registrarse() {
-        System.out.println("Usuario registrado: " + nombre + " (" + correo + ")");
-    }
-
-    public boolean autenticarse(String correo, String contraseña) {
-        return this.correo.equalsIgnoreCase(correo) && this.contraseña.equals(contraseña);
-    }
-
-    public void agregarViaje(Viaje viaje) {
-        if (viaje != null) viajes.add(viaje);
-
+    public void agregarViaje(Viaje v) { if (v != null) viajes.add(v); }
     public List<Viaje> getViajes() { return viajes; }
-
-    public boolean eliminarViaje(String nombreDestino) {
-        Iterator<Viaje> it = viajes.iterator();
-        boolean eliminado = false;
-        while (it.hasNext()) {
-            Viaje v = it.next();
-            if (v.getNombreDestino().equalsIgnoreCase(nombreDestino)) {
-                it.remove();
-                eliminado = true;
-            }
-        }
-        return eliminado;
-    }
-    
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }
-
     public String getContraseña() { return contraseña; }
     public void setContraseña(String contraseña) { this.contraseña = contraseña; }
-
     public String getTipoUsuario() { return tipoUsuario; }
-    public void setTipoUsuario(String tipo) { this.tipoUsuario = tipo; }
+    public void setTipoUsuario(String tipoUsuario) { this.tipoUsuario = tipoUsuario; }
 }
