@@ -108,6 +108,16 @@ public void editarActividad(String nombreAntiguo, Actividad nuevaActividad) {
     System.out.println("No se encontró la actividad con ese nombre.");
 }
 
+public double calcularPresupuestoTotal() {
+    double total = 0;
+    if (actividades != null) {
+        for (Actividad a : actividades) {
+            total += a.getCosto();
+        }
+    }
+    return total;
+}
+
 public double calcularDuracionTotal() {
     double total = 0;
     if (actividades != null) {
