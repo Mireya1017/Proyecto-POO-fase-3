@@ -154,6 +154,9 @@ public void generarResumen(Viaje viaje) {
         }
     }
 }
+public void pruebaResumen(Viaje viaje) {
+    generarResumen(viaje);
+}
 }
 public void mostrarDuracionViaje(Viaje viaje) {
     System.out.println("La duración total del viaje es: " + viaje.calcularDuracionTotal() + " horas.");
