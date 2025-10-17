@@ -10,122 +10,51 @@ public class Viaje {
     private double presupuesto;
     private int cantidadPersonas;
 
-    public Viaje(String nombreDestino, LocalDate fechaInicio, LocalDate fechaFin,
-                 double presupuesto, int cantidadPersonas) {
+    public Viaje(String nombreDestino, LocalDate fechaInicio, LocalDate fechaFin, double presupuesto, int cantidadPersonas) {
         this.nombreDestino = nombreDestino;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.presupuesto = presupuesto;
         this.cantidadPersonas = cantidadPersonas;
     }
-    public int calcularDuracion() {
+
+    public int calcularDuracionDiasV2() {
         if (fechaInicio == null || fechaFin == null) return 0;
-        long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
-        return (int) Math.max(0, dias);
+        long d = ChronoUnit.DAYS.between(fechaInicio, fechaFin) + 1;
+        return (int) Math.max(d, 0);
     }
-    public double calcularPresupuestoTotal() {
-        double suma = 0.0;
-        for (Actividad a : itinerario) suma += a.getCosto();
-        return suma;
+
+    public double calcularPresupuestoActividadesV2() {
+        double total = 0.0;
+        for (Actividad a : itinerario) if (a != null) total += a.getCostoEstimado();
+        return total;
     }
-    public void agregarActividad(Actividad actividad) {
-        if (actividad != null) itinerario.add(actividad);
+
+    public boolean agregarActividadV2(Actividad act) { return itinerario.add(act); }
+    public boolean editarActividadV2(int indice, Actividad nueva) {
+        if (indice < 0 || indice >= itinerario.size() || nueva == null) return false;
+        itinerario.set(indice, nueva);
+        return true;
     }
-    
-     public boolean editarActividad(String nombre) {
-        for (Actividad a : itinerario) {
-            if (a.getNombre().equalsIgnoreCase(nombre)) {
-                a.setTipo("Actualizada");
-                return true;
-            }
+    public boolean eliminarActividadV2(int indice) {
+        if (indice < 0 || indice >= itinerario.size()) return false;
+        itinerario.remove(indice);
+        return true;
+    }
+
+    public List<Actividad> verItinerarioInmutableV2() { return Collections.unmodifiableList(itinerario); }
+
+    public String generarResumenV2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Destino: ").append(nombreDestino).append("\n");
+        sb.append("Duración (días): ").append(calcularDuracionDiasV2()).append("\n");
+        sb.append("Presupuesto total: Q ").append(calcularPresupuestoActividadesV2()).append("\n");
+        for (int i = 0; i < itinerario.size(); i++) {
+            Actividad a = itinerario.get(i);
+            sb.append(i).append(": ").append(a.toString()).append("\n");
         }
-        return false;
-    }
-    public boolean eliminarActividad(String nombre) {
-        Iterator<Actividad> it = itinerario.iterator();
-        while (it.hasNext()) {
-            Actividad a = it.next();
-            if (a.getNombre().equalsIgnoreCase(nombre)) {
-                it.remove();
-                return true;
-            }
-        }
-        return false;
-    }
-    public List<Actividad> getItinerario() { 
-        return itinerario; 
-    }
-    public String getNombreDestino() { 
-        return nombreDestino; 
-    }
-    public void setNombreDestino(String nombreDestino) { 
-        this.nombreDestino = nombreDestino; 
+        return sb.toString();
     }
 
-    public LocalDate getFechaInicio() { 
-        return fechaInicio; 
-    }
-    public void setFechaInicio(LocalDate fechaInicio) { 
-        this.fechaInicio = fechaInicio; 
-    }
-
-    public LocalDate getFechaFin() { 
-        return fechaFin; 
-    }
-    public void setFechaFin(LocalDate fechaFin) { 
-        this.fechaFin = fechaFin; 
-    }
-
-    public double getPresupuesto() { 
-        return presupuesto; 
-    }
-    public void setPresupuesto(double presupuesto) { 
-        this.presupuesto = presupuesto; 
-    }
-
-    public int getCantidadPersonas() { 
-        return cantidadPersonas; 
-    }
-    public void setCantidadPersonas(int cantidadPersonas) { 
-        this.cantidadPersonas = cantidadPersonas;
-     }
+    public String getNombreDestino() { return nombreDestino; }
 }
-public void agregarActividad(Actividad actividad) {
-    if (actividades == null) {
-        actividades = new ArrayList<>();
-    }
-    actividades.add(actividad);
-    System.out.println("Actividad agregada correctamente: " + actividad.getNombre());
-}
-public void editarActividad(String nombreAntiguo, Actividad nuevaActividad) {
-    for (int i = 0; i < actividades.size(); i++) {
-        if (actividades.get(i).getNombre().equalsIgnoreCase(nombreAntiguo)) {
-            actividades.set(i, nuevaActividad);
-            System.out.println("Actividad actualizada correctamente.");
-            return;
-        }
-    }
-    System.out.println("No se encontró la actividad con ese nombre.");
-}
-
-public double calcularPresupuestoTotal() {
-    double total = 0;
-    if (actividades != null) {
-        for (Actividad a : actividades) {
-            total += a.getCosto();
-        }
-    }
-    return total;
-}
-
-public double calcularDuracionTotal() {
-    double total = 0;
-    if (actividades != null) {
-        for (Actividad a : actividades) {
-            total += a.getDuracion();
-        }
-    }
-    return total;
-}
-
-
