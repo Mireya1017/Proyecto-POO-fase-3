@@ -61,6 +61,11 @@ public List<Viaje> verViajes() {
         if (usuarioActual == null) return false;
         return usuarioActual.eliminarViaje(nombreDestino);
     }
+// Ver presupuesto
+    public void mostrarPresupuesto(Viaje viaje) {
+    System.out.println("El presupuesto total estimado es: Q" + viaje.calcularPresupuestoTotal());
+}
+
 
 // Info sobre viajes y usuario
 
