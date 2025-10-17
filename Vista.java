@@ -114,7 +114,7 @@ public class Vista {
 
     private void calcularPresupuesto() {
         if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
-        System.out.print("Destin: "); String d = sc.nextLine();
+        System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println("Presupuesto: Q " + controlador.calcularPresupuestoDeViajeV2(d));
     }
 
