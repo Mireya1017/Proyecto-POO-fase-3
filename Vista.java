@@ -15,6 +15,46 @@ public class Vista {
         System.out.println("7. Generar resumen del viaje");
         System.out.println("0. Salir");
         System.out.print("Opción: ");
+        opcion = sc.nextInt();
+            sc.nextLine(); 
+
+            switch (opcion) {
+                case 1:
+                    controlador.iniciarSesion();
+                    break;
+                case 2:
+                    controlador.crearViaje();
+                    break;
+                case 3:
+                    controlador.gestionarActividades(controlador.getViajeActual());
+                    break;
+                case 4:
+                    controlador.verViajes(controlador.getUsuarioActual());
+                    break;
+                case 5:
+                    controlador.mostrarDuracionViaje(controlador.getViajeActual());
+                    break;
+                case 6:
+                    controlador.mostrarPresupuesto(controlador.getViajeActual()); // ← AQUÍ VA
+                    break;
+                case 7:
+                    controlador.generarResumen(controlador.getViajeActual());
+                    break;
+                case 0:
+                    System.out.println("Gracias por usar el sistema.");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+
+        } while (opcion != 0);
+    }
+
+    public static void main(String[] args) {
+        Vista vista = new Vista();
+        vista.mostrarMenu(); // aquí se ejecuta el menú al correr el programa
+    }
+}
     }
 
     private LocalDate parseFecha(String s) {
@@ -252,6 +292,7 @@ case 6:
         System.out.println("¡Hasta pronto!");
     }
 }
+
 
 
 
