@@ -25,3 +25,23 @@ public class Usuario {
     public String getTipoUsuario() { return tipoUsuario; }
     public void setTipoUsuario(String tipoUsuario) { this.tipoUsuario = tipoUsuario; }
 }
+public List<Usuario> getUsuariosRegistrados() { return usuariosRegistrados; }
+public Usuario getUsuarioActual() { return usuarioActual; }
+
+public boolean guardarEstado(String ruta) {
+    try {
+        List<String> out = new ArrayList<>();
+        out.add("USUARIOS|" + usuariosRegistrados.size());
+        for (Usuario u : usuariosRegistrados) {
+            out.add("USUARIO|" + u.getNombre() + "|" + u.getCorreo() + "|" + u.getContraseña() + "|" + u.getTipoUsuario());
+            List<Viaje> viajes = u.getViajes();
+            out.add("VIAJES|" + viajes.size());
+            for (Viaje v : viajes) out.addAll(v.toStorageLines());
+            out.add("FINUSUARIO");
+        }
+        java.nio.file.Files.write(java.nio.file.Path.of(ruta), out, java.nio.charset.StandardCharsets.UTF_8);
+        return true;
+    } catch (Exception e) {
+        return false;
+    }
+}
