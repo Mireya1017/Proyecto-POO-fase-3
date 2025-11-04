@@ -135,7 +135,36 @@ public boolean agregarActividadSeguro(Actividad nueva) {
     return true;
 }
 
+public List<String> sugerirHuecos(int duracionMin) {
+    List<String> huecos = new ArrayList<>();
+    int diaIni = 6 * 60;   // 06:00
+    int diaFin = 22 * 60;  // 22:00
+
+    List<Actividad> ord = new ArrayList<>(itinerario);
+    ord.sort(Comparator.comparingInt(a -> Actividad.parseHoraMin(a.getHoraInicio())));
+
+    int cursor = diaIni;
+    for (Actividad a : ord) {
+        int ini = Actividad.parseHoraMin(a.getHoraInicio());
+        if (ini - cursor >= duracionMin) huecos.add(formatoHueco(cursor, ini));
+        cursor = Math.max(cursor, Actividad.parseHoraMin(a.getHoraFin()));
+    }
+    if (diaFin - cursor >= duracionMin) huecos.add(formatoHueco(cursor, diaFin));
+    return huecos;
 }
+
+private static String formatoHueco(int m1, int m2) {
+    return aHHMM(m1) + " - " + aHHMM(m2);
+}
+
+private static String aHHMM(int m) {
+    int h = m / 60;
+    int mm = m % 60;
+    return String.format("%02d:%02d", h, mm);
+}
+
+}
+
 
 
 
