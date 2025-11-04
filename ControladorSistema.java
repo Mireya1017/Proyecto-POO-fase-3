@@ -232,4 +232,15 @@ public boolean exportarResumenCSV(Viaje viaje, String rutaCsv) {
     } catch (Exception e) {
         return false;
     }
+    
+public boolean agregarActividadValidada(Viaje v, Actividad nueva) {
+    if (v == null || nueva == null) return false;
+    return v.agregarActividadSeguro(nueva);
+}
+
+public List<String> sugerirHuecosPara(Viaje v, int duracionMin) {
+    if (v == null) return java.util.Collections.emptyList();
+    return v.sugerirHuecos(duracionMin);
+}
+
 }
