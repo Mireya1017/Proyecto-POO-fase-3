@@ -45,3 +45,36 @@ public boolean guardarEstado(String ruta) {
         return false;
     }
 }
+
+public boolean cargarEstado(String ruta) {
+    try {
+        List<String> lines = java.nio.file.Files.readAllLines(java.nio.file.Path.of(ruta), java.nio.charset.StandardCharsets.UTF_8);
+        Iterator<String> it = lines.iterator();
+        usuariosRegistrados.clear();
+
+        String header = it.hasNext() ? it.next() : null;
+        if (header == null || !header.startsWith("USUARIOS|")) return false;
+        int nUsuarios = Integer.parseInt(header.split("\\|")[1].trim());
+
+        for (int i = 0; i < nUsuarios; i++) {
+            String uline = it.hasNext() ? it.next() : null; // USUARIO|...
+            String[] pu = uline.split("\\|");
+            Usuario u = new Usuario(pu[1].trim(), pu[2].trim(), pu[3].trim(), pu[4].trim());
+
+            String vline = it.hasNext() ? it.next() : null; // VIAJES|n
+            int nViajes = Integer.parseInt(vline.split("\\|")[1].trim());
+
+            for (int j = 0; j < nViajes; j++) {
+                Viaje v = Viaje.fromStorage(it);
+                if (v != null) u.agregarViaje(v);
+            }
+            // consumir FINUSUARIO
+            if (it.hasNext()) it.next();
+            usuariosRegistrados.add(u);
+        }
+        return true;
+    } catch (Exception e) {
+        return false;
+    }
+}
+
