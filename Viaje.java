@@ -81,5 +81,39 @@ public List<String> toStorageLines() {
     out.add("FINVIAJE");
     return out;
 }
+public static Viaje fromStorage(Iterator<String> it) {
+    if (it == null || !it.hasNext()) return null;
+    String header = it.next(); 
+    if (header == null || !header.startsWith("VIAJE|")) return null;
+    String destino = header.substring("VIAJE|".length()).trim();
+
+    String fechas = it.hasNext() ? it.next() : null; 
+    String[] pf = fechas.split("\\|");
+    java.time.LocalDate ini = java.time.LocalDate.parse(pf[1].trim());
+    java.time.LocalDate fin = java.time.LocalDate.parse(pf[2].trim());
+
+    String presLine = it.hasNext() ? it.next() : null; 
+    String[] pp = presLine.split("\\|");
+    double pres = Double.parseDouble(pp[1].trim());
+    int personas = Integer.parseInt(pp[3].trim());
+
+    String actsLine = it.hasNext() ? it.next() : null; 
+    int nActs = Integer.parseInt(actsLine.split("\\|")[1].trim());
+
+    Viaje v = new Viaje(destino, ini, fin, pres, personas);
+    for (int i = 0; i < nActs; i++) {
+        String actLine = it.hasNext() ? it.next() : null;
+        Actividad a = Actividad.fromStorageLine(actLine);
+        if (a != null) v.agregarActividad(a);
+    }
+
+    if (it.hasNext()) {
+        String finv = it.next();
+        if (!"FINVIAJE".equals(finv)) {
+           
+        }
+    }
+    return v;
+}
 }
 
