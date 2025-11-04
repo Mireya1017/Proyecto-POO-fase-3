@@ -38,4 +38,37 @@ public class Actividad {
     public String toString() {
         return nombre + " | " + tipo + " | " + horaInicio + "-" + horaFin + " | Q " + costoEstimado;
     }
+    public static int parseHoraMin(String hhmm) {
+    if (hhmm == null || !hhmm.contains(":")) return 0;
+    String[] p = hhmm.split(":");
+    int h = Integer.parseInt(p[0].trim());
+    int m = Integer.parseInt(p[1].trim());
+    return h * 60 + m;
+}
+
+public String toStorageLine() {
+    // Formato estable: nombre | tipo | horaInicio | horaFin | costo
+    return nombre + " | " + tipo + " | " + horaInicio + " | " + horaFin + " | " + costoEstimado;
+}
+
+public static Actividad fromStorageLine(String line) {
+    if (line == null) return null;
+    String[] p = line.split("\\|");
+    if (p.length < 5) return null;
+    String n = p[0].trim();
+    String t = p[1].trim();
+    String hi = p[2].trim();
+    String hf = p[3].trim();
+    double c = Double.parseDouble(p[4].trim());
+    return new Actividad(n, t, hi, hf, c);
+}
+
+public String toCsvRow() {
+    String safeNombre = "\"" + nombre.replace("\"","\"\"") + "\"";
+    String safeTipo = "\"" + tipo.replace("\"","\"\"") + "\"";
+    return safeNombre + "," + safeTipo + "," + horaInicio + "," + horaFin + "," + costoEstimado;
+}
+
+
+    
 }
