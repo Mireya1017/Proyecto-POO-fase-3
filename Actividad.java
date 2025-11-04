@@ -69,6 +69,14 @@ public String toCsvRow() {
     return safeNombre + "," + safeTipo + "," + horaInicio + "," + horaFin + "," + costoEstimado;
 }
 
-
+public boolean chocaCon(Actividad otra) {
+    if (otra == null) return false;
+    int a1 = parseHoraMin(this.horaInicio);
+    int a2 = parseHoraMin(this.horaFin);
+    int b1 = parseHoraMin(otra.horaInicio);
+    int b2 = parseHoraMin(otra.horaFin);
+    return a1 < b2 && b1 < a2; // intersección de intervalos
+}
     
+
 }
