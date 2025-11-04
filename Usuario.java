@@ -77,4 +77,25 @@ public boolean cargarEstado(String ruta) {
         return false;
     }
 }
+public boolean exportarResumenCSV(Viaje viaje, String rutaCsv) {
+    if (viaje == null) return false;
+    try {
+        List<String> out = new ArrayList<>();
+        out.add("Destino,Fecha_inicio,Fecha_fin,Presupuesto,Cant_personas");
+        out.add(
+            "\"" + viaje.getNombreDestino().replace("\"","\"\"") + "\"," +
+            viaje.getFechaInicio() + "," +
+            viaje.getFechaFin() + "," +
+            viaje.getPresupuesto() + "," +
+            viaje.getCantidadPersonas()
+        );
+        out.add("");
+        out.add("Actividad,Tipo,Hora_inicio,Hora_fin,Costo");
+        for (Actividad a : viaje.getActividades()) out.add(a.toCsvRow());
+        java.nio.file.Files.write(java.nio.file.Path.of(rutaCsv), out, java.nio.charset.StandardCharsets.UTF_8);
+        return true;
+    } catch (Exception e) {
+        return false;
+    }
+}
 
