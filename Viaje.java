@@ -127,6 +127,15 @@ public boolean hayConflicto(Actividad nueva) {
     return false;
 }
 
+public boolean agregarActividadSeguro(Actividad nueva) {
+    if (nueva == null) return false;
+    if (hayConflicto(nueva)) return false;
+    itinerario.add(nueva);
+    ordenarItinerario();
+    return true;
 }
+
+}
+
 
 
