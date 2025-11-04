@@ -115,5 +115,18 @@ public static Viaje fromStorage(Iterator<String> it) {
     }
     return v;
 }
+
+public void ordenarItinerario() {
+    itinerario.sort(Comparator.comparingInt(a -> Actividad.parseHoraMin(a.getHoraInicio())));
 }
+
+public boolean hayConflicto(Actividad nueva) {
+    for (Actividad a : itinerario) {
+        if (a.chocaCon(nueva)) return true;
+    }
+    return false;
+}
+
+}
+
 
