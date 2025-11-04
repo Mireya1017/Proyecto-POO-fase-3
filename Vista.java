@@ -123,4 +123,48 @@ public class Vista {
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println(controlador.generarResumenDeViajeV2(d));
     }
+
+// Supongamos que ya pedimos nombre,tipo,horaInicio,horaFin,costo y tenemos 'viajeSeleccionado' y 'nuevaActividad'
+if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); break; }
+Usuario u = controlador.getUsuarioActual();
+if (u.getViajes().isEmpty()) { System.out.println("No tienes viajes."); break; }
+// pedir índice de viaje o usar viajeSeleccionado; aquí pido índice:
+System.out.print("Índice del viaje: ");
+int idx = Integer.parseInt(sc.nextLine());
+if (idx < 0 || idx >= u.getViajes().size()) { System.out.println("Índice inválido."); break; }
+Viaje viajeSel = u.getViajes().get(idx);
+
+// pedir datos
+System.out.print("Nombre actividad: ");
+String nom = sc.nextLine();
+System.out.print("Tipo: ");
+String tipo = sc.nextLine();
+System.out.print("Hora inicio (HH:MM): ");
+String hi = sc.nextLine();
+System.out.print("Hora fin (HH:MM): ");
+String hf = sc.nextLine();
+System.out.print("Costo estimado: ");
+double costo = Double.parseDouble(sc.nextLine());
+
+Actividad nueva = new Actividad(nom, tipo, hi, hf, costo);
+boolean ok = controlador.agregarActividadValidada(viajeSel, nueva);
+if (ok) {
+    System.out.println("Actividad agregada correctamente. Itinerario ordenado.");
+} else {
+    System.out.println("Conflicto de horario. ¿Ver sugerencias de huecos? (s/n)");
+    String r = sc.nextLine().trim().toLowerCase();
+    if (r.equals("s")) {
+        System.out.print("Duración deseada en minutos: ");
+        int d = Integer.parseInt(sc.nextLine());
+        List<String> huecos = controlador.sugerirHuecosPara(viajeSel, d);
+        if (huecos.isEmpty()) System.out.println("No se encontraron huecos disponibles.");
+        else {
+            System.out.println("Huecos sugeridos:");
+            for (String h : huecos) System.out.println(" - " + h);
+        }
+    } else {
+        System.out.println("No se agregó la actividad.");
+    }
+}
+
 }
