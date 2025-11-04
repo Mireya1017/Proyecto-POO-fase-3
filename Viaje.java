@@ -56,5 +56,30 @@ public class Viaje {
         return sb.toString();
     }
 
-    public String getNombreDestino() { return nombreDestino; }
+public String getNombreDestino() { 
+    return nombreDestino;
 }
+
+public java.time.LocalDate getFechaInicio() { return fechaInicio; }
+public java.time.LocalDate getFechaFin() { return fechaFin; }
+public double getPresupuesto() { return presupuesto; }
+public int getCantidadPersonas() { return cantidadPersonas; }
+public List<Actividad> getActividades() { return itinerario; }
+
+public void agregarActividad(Actividad a) {
+    if (a != null) itinerario.add(a);
+}
+
+
+public List<String> toStorageLines() {
+    List<String> out = new ArrayList<>();
+    out.add("VIAJE|" + nombreDestino);
+    out.add("FECHAS|" + fechaInicio.toString() + "|" + fechaFin.toString());
+    out.add("PRESUPUESTO|" + presupuesto + "|PERSONAS|" + cantidadPersonas);
+    out.add("ACTIVIDADES|" + itinerario.size());
+    for (Actividad a : itinerario) out.add(a.toStorageLine());
+    out.add("FINVIAJE");
+    return out;
+}
+}
+
