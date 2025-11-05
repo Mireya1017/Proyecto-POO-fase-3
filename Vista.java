@@ -1,5 +1,6 @@
-import java.util.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
 
 public class Vista {
     private final Scanner sc = new Scanner(System.in);
@@ -22,7 +23,7 @@ public class Vista {
                 case 5 -> calcularDuracion();
                 case 6 -> calcularPresupuesto();
                 case 7 -> generarResumen();
-                case 0 -> System.out.println("Saliendo...");
+                case 0 -> { System.out.println("Saliendo..."); return; }
                 default -> System.out.println("Opción inválida.");
             }
         } while (true);
@@ -59,13 +60,17 @@ public class Vista {
 
     private void crearViaje() {
         if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
-        System.out.print("Destino: "); String d = sc.nextLine();
-        System.out.print("Inicio (YYYY-MM-DD): "); LocalDate i = LocalDate.parse(sc.nextLine());
-        System.out.print("Fin (YYYY-MM-DD): "); LocalDate f = LocalDate.parse(sc.nextLine());
-        System.out.print("Presupuesto: "); double p = Double.parseDouble(sc.nextLine());
-        System.out.print("Personas: "); int pe = Integer.parseInt(sc.nextLine());
-        controlador.crearViajeParaActual(new Viaje(d, i, f, p, pe));
-        System.out.println("Viaje creado.");
+        try {
+            System.out.print("Destino: "); String d = sc.nextLine();
+            System.out.print("Inicio (YYYY-MM-DD): "); LocalDate i = LocalDate.parse(sc.nextLine());
+            System.out.print("Fin (YYYY-MM-DD): "); LocalDate f = LocalDate.parse(sc.nextLine());
+            System.out.print("Presupuesto: "); double p = Double.parseDouble(sc.nextLine());
+            System.out.print("Personas: "); int pe = Integer.parseInt(sc.nextLine());
+            controlador.crearViajeParaActual(new Viaje(d, i, f, p, pe));
+            System.out.println("Viaje creado.");
+        } catch (Exception e) {
+            System.out.println("Entrada inválida. No se creó el viaje.");
+        }
     }
 
     private Actividad pedirActividad() {
@@ -85,13 +90,48 @@ public class Vista {
             System.out.println("\n1. Agregar 2. Editar 3. Eliminar 4. Ver 0. Salir");
             try { op = Integer.parseInt(sc.nextLine()); } catch (Exception e) { op = -1; }
             switch (op) {
-                case 1 -> System.out.println(controlador.agregarActividadAViajeV2(d, pedirActividad()) ? "Ok" : "Error");
+                case 1 -> { // agregar con validación y sugerencia de huecos
+                    Actividad nueva;
+                    try { nueva = pedirActividad(); } catch (Exception ex) { System.out.println("Entrada inválida."); break; }
+                    boolean ok = controlador.agregarActividadAViajeV2(d, nueva);
+                    if (ok) {
+                        System.out.println("Actividad agregada correctamente. Itinerario ordenado.");
+                    } else {
+                        System.out.println("Conflicto de horario o destino no encontrado. ¿Ver sugerencias de huecos? (s/n)");
+                        String r = sc.nextLine().trim().toLowerCase();
+                        if (r.equals("s")) {
+                            try {
+                                System.out.print("Duración deseada en minutos: ");
+                                int dur = Integer.parseInt(sc.nextLine());
+                                // buscar viaje
+                                Viaje v = controlador.getUsuarioActual().getViajes().stream()
+                                        .filter(x -> x.getNombreDestino().equalsIgnoreCase(d)).findFirst().orElse(null);
+                                if (v == null) { System.out.println("Viaje no encontrado."); break; }
+                                List<String> huecos = controlador.sugerirHuecosPara(v, dur);
+                                if (huecos.isEmpty()) System.out.println("No se encontraron huecos disponibles.");
+                                else {
+                                    System.out.println("Huecos sugeridos:");
+                                    for (String h : huecos) System.out.println(" - " + h);
+                                }
+                            } catch (Exception ex) {
+                                System.out.println("Entrada inválida.");
+                            }
+                        } else {
+                            System.out.println("No se agregó la actividad.");
+                        }
+                    }
+                }
                 case 2 -> {
                     List<Actividad> lista = controlador.verItinerarioDeViajeV2(d);
                     for (int i = 0; i < lista.size(); i++) System.out.println(i + ": " + lista.get(i));
-                    System.out.print("Índice: "); int idx = Integer.parseInt(sc.nextLine());
-                    if (idx >= 0 && idx < lista.size())
-                        System.out.println(controlador.editarActividadDeViajeV2(d, idx, pedirActividad()) ? "Ok" : "Error");
+                    System.out.print("Índice: ");
+                    int idx = Integer.parseInt(sc.nextLine());
+                    if (idx >= 0 && idx < lista.size()) {
+                        Actividad nueva = pedirActividad();
+                        System.out.println(controlador.editarActividadDeViajeV2(d, idx, nueva) ? "Ok" : "Error");
+                    } else {
+                        System.out.println("Índice inválido.");
+                    }
                 }
                 case 3 -> {
                     List<Actividad> lista = controlador.verItinerarioDeViajeV2(d);
@@ -123,48 +163,4 @@ public class Vista {
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println(controlador.generarResumenDeViajeV2(d));
     }
-
-// Supongamos que ya pedimos nombre,tipo,horaInicio,horaFin,costo y tenemos 'viajeSeleccionado' y 'nuevaActividad'
-if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); break; }
-Usuario u = controlador.getUsuarioActual();
-if (u.getViajes().isEmpty()) { System.out.println("No tienes viajes."); break; }
-// pedir índice de viaje o usar viajeSeleccionado; aquí pido índice:
-System.out.print("Índice del viaje: ");
-int idx = Integer.parseInt(sc.nextLine());
-if (idx < 0 || idx >= u.getViajes().size()) { System.out.println("Índice inválido."); break; }
-Viaje viajeSel = u.getViajes().get(idx);
-
-// pedir datos
-System.out.print("Nombre actividad: ");
-String nom = sc.nextLine();
-System.out.print("Tipo: ");
-String tipo = sc.nextLine();
-System.out.print("Hora inicio (HH:MM): ");
-String hi = sc.nextLine();
-System.out.print("Hora fin (HH:MM): ");
-String hf = sc.nextLine();
-System.out.print("Costo estimado: ");
-double costo = Double.parseDouble(sc.nextLine());
-
-Actividad nueva = new Actividad(nom, tipo, hi, hf, costo);
-boolean ok = controlador.agregarActividadValidada(viajeSel, nueva);
-if (ok) {
-    System.out.println("Actividad agregada correctamente. Itinerario ordenado.");
-} else {
-    System.out.println("Conflicto de horario. ¿Ver sugerencias de huecos? (s/n)");
-    String r = sc.nextLine().trim().toLowerCase();
-    if (r.equals("s")) {
-        System.out.print("Duración deseada en minutos: ");
-        int d = Integer.parseInt(sc.nextLine());
-        List<String> huecos = controlador.sugerirHuecosPara(viajeSel, d);
-        if (huecos.isEmpty()) System.out.println("No se encontraron huecos disponibles.");
-        else {
-            System.out.println("Huecos sugeridos:");
-            for (String h : huecos) System.out.println(" - " + h);
-        }
-    } else {
-        System.out.println("No se agregó la actividad.");
-    }
-}
-
 }
