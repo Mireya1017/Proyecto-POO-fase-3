@@ -90,6 +90,15 @@ public List<Viaje> recomendarViajesPorPresupuesto(double maxPresupuesto) {
     }
     return recomendaciones;
 }
+public List<Viaje> recomendarViajesPorDuracion(int maxDias) {
+    List<Viaje> recomendaciones = new ArrayList<>();
+    for (Usuario u : usuariosRegistrados) {
+        for (Viaje v : u.getViajes()) {
+            if (v.calcularDuracion() <= maxDias) recomendaciones.add(v);
+        }
+    }
+    return recomendaciones;
+}
 
     public Usuario getUsuarioActual() { 
         return usuarioActual; 
