@@ -212,3 +212,23 @@ public String resumenRapidoUsuario(String correoUsuario) {
     }
     return "Usuario no encontrado.";
 }
+public String resumenRapidoUsuarioPorPresupuesto(String correoUsuario, double maxPresupuesto) {
+    for (Usuario u : usuariosRegistrados) {
+        if (u.getCorreo().equalsIgnoreCase(correoUsuario)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Resumen rápido de viajes (presupuesto <= Q ").append(maxPresupuesto)
+              .append(") para ").append(u.getNombre()).append(":\n");
+            for (Viaje v : u.getViajes()) {
+                if (v.getPresupuesto() <= maxPresupuesto) {
+                    sb.append("- ").append(v.getNombreDestino())
+                      .append(" | Duración: ").append(v.calcularDuracion()).append(" días")
+                      .append(" | Presupuesto: Q ").append(v.getPresupuesto())
+                      .append(" | Actividades: ").append(v.getActividades().size()).append("\n");
+                }
+            }
+            return sb.toString();
+        }
+    }
+    return "Usuario no encontrado o sin viajes dentro del presupuesto.";
+}
+
