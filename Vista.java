@@ -23,6 +23,7 @@ public class Vista {
                 case 5 -> calcularDuracion();
                 case 6 -> calcularPresupuesto();
                 case 7 -> generarResumen();
+                case 8 -> mostrarRecomendaciones();
                 case 9 -> mostrarResumenRapido();
                 case 0 -> { System.out.println("Saliendo..."); return; }
                 default -> System.out.println("Opción inválida.");
