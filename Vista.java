@@ -171,5 +171,21 @@ public class Vista {
     String correo = controlador.getUsuarioActual().getCorreo();
     System.out.println(controlador.resumenRapidoUsuario(correo));
     }   
-    
+    private void mostrarRecomendaciones() {
+    try {
+        System.out.print("Máximo presupuesto: "); double maxP = Double.parseDouble(sc.nextLine());
+        System.out.print("Máxima duración (días): "); int maxD = Integer.parseInt(sc.nextLine());
+        List<Viaje> recs = controlador.recomendarViajes(maxP, maxD);
+        if (recs.isEmpty()) System.out.println("No hay viajes que coincidan con los criterios.");
+        else {
+            System.out.println("Viajes recomendados:");
+            for (Viaje v : recs) {
+                System.out.println("- " + v.getNombreDestino() + " | Duración: " + v.calcularDuracion() +
+                                   " días | Presupuesto: Q " + v.getPresupuesto());
+            }
+        }
+    } catch (Exception e) { System.out.println("Entrada inválida."); }
+}
+
+
 }
