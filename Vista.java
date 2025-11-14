@@ -10,6 +10,12 @@ public class Vista {
         this.controlador = controlador;
     }
 
+    public static void main(String[] args) {
+        ControladorSistema controlador = new ControladorSistema();
+        Vista vista = new Vista(controlador);
+        vista.iniciar();
+    }
+    
     public void iniciar() {
         int op;
         do {
@@ -256,4 +262,5 @@ public class Vista {
         String resumen = controlador.resumenRapidoUsuario(correo);
         System.out.println(resumen);
     }
+
 }
