@@ -144,8 +144,3 @@ public class Viaje {
         return String.format("%02d:%02d", h, mm);
     }
 }
-        int mm = m % 60;
-        return String.format("%02d:%02d", h, mm);
-    }
-
-}
