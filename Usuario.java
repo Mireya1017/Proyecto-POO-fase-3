@@ -1,4 +1,4 @@
-iimport java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ public class Usuario {
     }
 
     public void registrarse() {
-        // placeholder: si se quiere lógica extra (enviar correo, setear fecha), va aquí.
+     
     }
 
     public boolean autenticarse(String correo, String contrasena) {

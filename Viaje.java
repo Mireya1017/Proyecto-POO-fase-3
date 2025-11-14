@@ -24,7 +24,6 @@ public class Viaje {
         return (int) Math.max(d, 0);
     }
 
-    // alias usado por la vista/controlador
     public int calcularDuracion() { return calcularDuracionDiasV2(); }
 
     public double calcularPresupuestoActividadesV2() {
@@ -63,20 +62,19 @@ public class Viaje {
         return sb.toString();
     }
 
-    // Getters usados por controlador/vista
     public String getNombreDestino() { return nombreDestino; }
     public LocalDate getFechaInicio() { return fechaInicio; }
     public LocalDate getFechaFin() { return fechaFin; }
     public double getPresupuesto() { return presupuesto; }
     public int getCantidadPersonas() { return cantidadPersonas; }
     public List<Actividad> getActividades() { return itinerario; }
-    // alias
+
     public List<Actividad> getItinerario() { return itinerario; }
     public String getDestino() { return nombreDestino; }
 
     public void agregarActividad(Actividad a) { if (a != null) itinerario.add(a); }
 
-    // Serialización a líneas
+ 
     public List<String> toStorageLines() {
         List<String> out = new ArrayList<>();
         out.add("VIAJE|" + nombreDestino);
@@ -88,7 +86,6 @@ public class Viaje {
         return out;
     }
 
-    // Construcción desde iterator de líneas
     public static Viaje fromStorage(Iterator<String> it) {
         if (it == null || !it.hasNext()) return null;
         String header = it.next();
@@ -118,12 +115,11 @@ public class Viaje {
 
         if (it.hasNext()) {
             String finv = it.next();
-            // si no es FINVIAJE, lo ignoramos (robusto)
+       
         }
         return v;
     }
 
-    // Ordena por hora de inicio
     public void ordenarItinerario() {
         itinerario.sort(Comparator.comparingInt(a -> Actividad.parseHoraMin(a.getHoraInicio())));
     }
@@ -143,11 +139,11 @@ public class Viaje {
         return true;
     }
 
-    // Sugerencias de huecos (duracionMin en minutos)
+
     public List<String> sugerirHuecos(int duracionMin) {
         List<String> huecos = new ArrayList<>();
-        int diaIni = 6 * 60;   // 06:00
-        int diaFin = 22 * 60;  // 22:00
+        int diaIni = 6 * 60;   
+        int diaFin = 22 * 60; 
 
         List<Actividad> ord = new ArrayList<>(itinerario);
         ord.sort(Comparator.comparingInt(a -> Actividad.parseHoraMin(a.getHoraInicio())));

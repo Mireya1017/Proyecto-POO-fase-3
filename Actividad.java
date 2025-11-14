@@ -3,8 +3,8 @@ import java.util.Objects;
 public class Actividad {
     private String nombre;
     private String tipo;
-    private String horaInicio; // formato "HH:MM"
-    private String horaFin;    // formato "HH:MM"
+    private String horaInicio; 
+    private String horaFin;    
     private double costoEstimado;
 
     public Actividad(String nombre, String tipo, String horaInicio, String horaFin, double costoEstimado) {
@@ -15,7 +15,7 @@ public class Actividad {
         this.costoEstimado = costoEstimado;
     }
 
-    // Copia con opciones (si argumento es null se mantiene el original)
+   
     public static Actividad copiaEditadaV2(Actividad base, String nombre, String tipo, String inicio, String fin, Double costo) {
         if (base == null) return null;
         return new Actividad(
@@ -43,7 +43,7 @@ public class Actividad {
         return nombre + " | " + tipo + " | " + horaInicio + "-" + horaFin + " | Q " + costoEstimado;
     }
 
-    // Convierte "HH:MM" a minutos desde medianoche. Validación sencilla.
+
     public static int parseHoraMin(String hhmm) {
         if (hhmm == null || !hhmm.contains(":")) return 0;
         String[] p = hhmm.split(":");
@@ -56,7 +56,6 @@ public class Actividad {
         }
     }
 
-    // Formato estable para almacenamiento en líneas
     public String toStorageLine() {
         return nombre + " | " + tipo + " | " + horaInicio + " | " + horaFin + " | " + costoEstimado;
     }
@@ -78,14 +77,13 @@ public class Actividad {
         return new Actividad(n, t, hi, hf, c);
     }
 
-    // Para CSV: escapa comillas dobles
     public String toCsvRow() {
         String safeNombre = "\"" + nombre.replace("\"","\"\"") + "\"";
         String safeTipo = "\"" + tipo.replace("\"","\"\"") + "\"";
         return safeNombre + "," + safeTipo + "," + horaInicio + "," + horaFin + "," + costoEstimado;
     }
 
-    // Comprueba si dos actividades se solapan (intervalos semi-abiertos [inicio,fin))
+    
     public boolean chocaCon(Actividad otra) {
         if (otra == null) return false;
         int a1 = parseHoraMin(this.horaInicio);
