@@ -165,4 +165,10 @@ public class Vista {
         System.out.print("Destino: "); String d = sc.nextLine();
         System.out.println(controlador.generarResumenDeViajeV2(d));
     }
+    private void mostrarResumenRapido() {
+    if (controlador.getUsuarioActual() == null) { System.out.println("Inicia sesión."); return; }
+    String correo = controlador.getUsuarioActual().getCorreo();
+    System.out.println(controlador.resumenRapidoUsuario(correo));
+    }   
+    
 }
