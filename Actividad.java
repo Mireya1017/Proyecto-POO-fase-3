@@ -15,7 +15,6 @@ public class Actividad {
         this.costoEstimado = costoEstimado;
     }
 
-   
     public static Actividad copiaEditadaV2(Actividad base, String nombre, String tipo, String inicio, String fin, Double costo) {
         if (base == null) return null;
         return new Actividad(
@@ -42,7 +41,6 @@ public class Actividad {
     public String toString() {
         return nombre + " | " + tipo + " | " + horaInicio + "-" + horaFin + " | Q " + costoEstimado;
     }
-
 
     public static int parseHoraMin(String hhmm) {
         if (hhmm == null || !hhmm.contains(":")) return 0;
@@ -83,7 +81,6 @@ public class Actividad {
         return safeNombre + "," + safeTipo + "," + horaInicio + "," + horaFin + "," + costoEstimado;
     }
 
-    
     public boolean chocaCon(Actividad otra) {
         if (otra == null) return false;
         int a1 = parseHoraMin(this.horaInicio);

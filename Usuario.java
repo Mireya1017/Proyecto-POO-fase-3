@@ -16,9 +16,7 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario == null ? "" : tipoUsuario;
     }
 
-    public void registrarse() {
-     
-    }
+    public void registrarse() { }
 
     public boolean autenticarse(String correo, String contrasena) {
         if (correo == null || contrasena == null) return false;
