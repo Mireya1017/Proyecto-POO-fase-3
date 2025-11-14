@@ -194,4 +194,21 @@ public void pruebaResumen(Viaje viaje) {
 public void mostrarDuracionViaje(Viaje viaje) {
     System.out.println("La duración total del viaje es: " + viaje.calcularDuracionTotal() + " horas.");
 }
+
+}
+public String resumenRapidoUsuario(String correoUsuario) {
+    for (Usuario u : usuariosRegistrados) {
+        if (u.getCorreo().equalsIgnoreCase(correoUsuario)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Resumen rápido de viajes para ").append(u.getNombre()).append(":\n");
+            for (Viaje v : u.getViajes()) {
+                sb.append("- ").append(v.getNombreDestino())
+                  .append(" | Duración: ").append(v.calcularDuracion()).append(" días")
+                  .append(" | Presupuesto: Q ").append(v.getPresupuesto())
+                  .append(" | Actividades: ").append(v.getActividades().size()).append("\n");
+            }
+            return sb.toString();
+        }
+    }
+    return "Usuario no encontrado.";
 }
