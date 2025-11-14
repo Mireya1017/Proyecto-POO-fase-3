@@ -39,6 +39,7 @@ public class Vista {
         System.out.println("5. Calcular duración");
         System.out.println("6. Calcular presupuesto");
         System.out.println("7. Generar resumen");
+        System.out.println("8. Recomendaciones de viajes");
         System.out.println("9. Resumen rápido de viajes del usuario");
         System.out.println("0. Salir");
         System.out.print("Opción: ");
